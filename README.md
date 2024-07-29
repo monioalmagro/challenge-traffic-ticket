@@ -47,7 +47,7 @@ http://localhost:8000/admin/traffic_violations/person/add/
 # se realiza la carga de vehiculos 
 http://localhost:8000/admin/traffic_violations/vehicle/add/
 
-
+# generamos token para el user (reemplazar las variables {{}})
 
 ```bash
 curl --location 'http://localhost:8000/api/token/' \
@@ -59,12 +59,12 @@ curl --location 'http://localhost:8000/api/token/' \
 }
 '
 ```
-
+# con la respuesta response {{access}} podremos generar una infraccion (reemplazar las variables {{}})
 
 ```bash
 curl --location 'http://localhost:8000/cargar_infraccion/' \
 --header 'Content-Type: application/json' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIyMjg3MTkyLCJpYXQiOjE3MjIyODY4OTIsImp0aSI6ImVhMzVlOGE5MWViODQ2ZGM5ZGU3MWQxYTBjNDdhMzUzIiwidXNlcl9pZCI6MX0.V5wRGjIILsMvbiYqSfjzoxdhiJQWqM-itDKKr2fGkSY' \
+--header 'Authorization: Bearer {{access}}' \
 --header 'Cookie: csrftoken=rDTeXQiHrqLJEGT1meDujdCXsSlxt4qPPA0q9RRSE78EuuvLb1d3gaCELjuliXHF' \
 --data '{
     "placa_patente":{{placa_patente}},
@@ -78,3 +78,10 @@ curl --location 'http://localhost:8000/cargar_infraccion/' \
 curl --location 'http://localhost:8000/generar_informe/{{email-person}}' \
 --header 'Cookie: csrftoken=rDTeXQiHrqLJEGT1meDujdCXsSlxt4qPPA0q9RRSE78EuuvLb1d3gaCELjuliXHF'
 ```
+
+## Arquitectura AWS propuesta:
+
+EC2: Para correr los contenedores Docker.
+S3: Para almacenamiento de archivos estáticos si es necesario.
+IAM: Para gestionar permisos y roles de acceso.
+CloudWatch: Para monitoreo y logs.
